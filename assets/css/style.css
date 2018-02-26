@@ -1,33 +1,72 @@
 h1{
-    font-size:33px;
-    color:green;
+    font-size:5.7rem;
+    color:white;
     text-align: center;
+    font-family: 'Love Ya Like A Sister';
+    line-height:1;
 }
 .btn{
     width:600px;
     padding:10px;
-    margin-top:22px;
+    margin:22px auto 0 auto;
+    background-color:lightgreen;
 }
-.startBtn{
-    width:600px;
+.startBtn, .restartBtn{
+    width:450px;
+    /* width:100%; */
     padding:10px;
-    margin-top:22px;
+    /* margin-top:22px; */
+    font-family: 'Sue Ellen Francisco';
+    font-size:44px;
+    align-items: center;
+    display:block;
+    border-radius: 2%;
+    margin:0 auto;
+    background-color:lightyellow;
+}
+.startBtn:hover, .restartBtn:hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 .btn:hover{
     background-color:yellow;
     border:1px solid black;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 h2{
     color:black;
     text-align: center;
 }
 #question{
-    background-color:pink;
+    background-color:white;
     line-height:75px;
-}
+    /* display:block; */
+    margin:0 auto;
+    -webkit-box-shadow: 0 8px 6px -6px #999;
+    -moz-box-shadow: 0 8px 6px -6px #999;
+    box-shadow: 0 8px 6px -6px #999;}
 .hide{
     display: none;
 }
 .show{
     display:block;
+}
+.questionPic{
+    margin:0 auto;
+    display:block; 
+    max-height:300px;
+}
+body{
+    /* background-color:lightyellow; */
+    /* background: linear-gradient(to bottom right, red, yellow); */
+    /* height:100vh; */
+    background-image:url("../images/KSC_Background_1920x1080.png");
+}
+.jumbotron{
+    background-color:green;
+    border-radius:0;
+    -webkit-box-shadow: 0 8px 6px -6px #999;
+    -moz-box-shadow: 0 8px 6px -6px #999;
+    box-shadow: 0 8px 6px -6px #999;
+    height:145px;
+    padding:2rem 1rem;
 }
