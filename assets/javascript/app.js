@@ -1,3 +1,4 @@
+
 //giant triviaGame var to hold everything so I can reset the game w/o refreshing the page
 var triviaGame = {
     trivia:{
@@ -27,58 +28,142 @@ var triviaGame = {
             }
     },
 
-    //press start to start game
     // newQuestion();
     numCorrect:0,
     numIncorrect:0,
     numUnanswered:0,
-    correctAnswer:0,
+    correctAnswerNumber:0,
+    answerInWords:undefined,
+
+
 
     //pick a question
     newQuestion:function(){
         // console.log(trivia);
-        var i = 1;
-        console.log(this.trivia);
-        console.log(this.trivia[i].answer);
-        correctAnswer=trivia[i].answer;
-        $("#question").html(trivia[i].question);
-        $("#choice1").html(trivia[i].c1);
-        $("#choice2").html(trivia[i].c2);
-        $("#choice3").html(trivia[i].c3);
-        $("#choice4").html(trivia[i].c4);
+        
+        //buttons appear
+        $("#time, #question").removeClass("hide");
+        $("#time, #question").addClass("show");      
+        $(".btn").removeClass("hide");
+        $(".btn").addClass("show");
+
+        //start timer
+        setTimeout(this.timesUp, 1000*3);//change to 30
+
+        var i = -1; //corresponds to the question the game is on
+        i++;
+        var objKeys = Object.keys(this.trivia);
+        console.log(objKeys); //0:question1, 1:question2..
+        console.log(objKeys[i]); //question1
+        console.log(this.trivia);//everything
+        console.log(this.trivia[objKeys[i]]);//all info for question1
+        console.log(this.trivia[objKeys[i]].question);//all info for question1
+        console.log(this.trivia[objKeys[i]].answer);//answer# = 4
+        correctAnswerNumber=this.trivia[objKeys[i]].answer;
+        console.log(correctAnswerNumber);//answer = 4
+        $("#question").html(this.trivia[objKeys[i]].question);
+        $("#choice1").html(this.trivia[objKeys[i]].c1);
+        $("#choice2").html(this.trivia[objKeys[i]].c2);
+        $("#choice3").html(this.trivia[objKeys[i]].c3);
+        $("#choice4").html(this.trivia[objKeys[i]].c4);
     },
 
     checkAnswer:function(){
-        console.log($(this).val());
-        console.log(correctAnswer);
-        if (($(this).val()) == correctAnswer) {
-            $("#answer").html("Correct!");
-            showPic(); //need to write this function
-            console.log("#choiceButton");
-            numCorrect++;
-            };
+        // var i = -1; //do I need this and next two lines???
+        // i++;
+        // var objKeys = Object.keys(this.trivia);
+        // console.log(this);
+        // console.log(this.trivia[objKeys[i]].answer);
+        // console.log($(this).val());
+        if (valOfButtonPushed == correctAnswerNumber) {
+            $("#answerMsg").html("Correct!");
+            // showPic(); //need to write this function
+            this.numCorrect++;
+            clearTimeout(this.timesUp);//stop timer //not working
+            }
+        else {
+            this.translateAnswerToWords();
+            // var expr = this.trivia[objKeys[i]].answer;
+            // switch(expr) {
+            //     case '1':
+            //         answerInWords = this.trivia[objKeys[i]].c1;
+            //         break;
+            //     case '2':
+            //         answerInWords = this.trivia[objKeys[i]].c2;
+            //         break;
+            //     case '3':
+            //         answerInWords = this.trivia[objKeys[i]].c3;
+            //         break;
+            //     default:
+            //         answerInWords = (this.trivia[objKeys[i]].c4);
+            $("#answerMsg").html("Nope! The correct answer was: "+ answerInWords);
+            // showPic(); //need to write this function
+            this.numIncorrect++;
+            clearTimeout(this.timesUp);//stop timer //not working
+            }
+        // }
+        //wait 3 seconds and move to next question
+        //i++ to move to next question OR leave it where it is
     },
 
-        // ($(".btn") === this.val){
-        //if button is correct answer, correct++ and message
-        //if wrong, incorrect++ and message
+    timesUp: function(){
+        // console.log(answerInWords);
+        this.translateAnswerToWords();
+        $("#answerMsg").html("Out of time! The correct answer was: " + answerInWords);
+        console.log(answerInWords);
+
+
+        //if run out of time - change to "Out of time!" The correct answer was:... and a pic
+
+    }, //end timesUp
+
+    translateAnswerToWords:function(){
+        var i = -1; //corresponds to the question the game is on
+        i++;
+        // console.log("working");
+        var objKeys = Object.keys(this.trivia);
+        var expr = this.trivia[objKeys[i]].answer;
+        switch(expr) {
+            case '1':
+                answerInWords = this.trivia[objKeys[i]].c1;
+                break;
+            case '2':
+                answerInWords = this.trivia[objKeys[i]].c2;
+                break;
+            case '3':
+                answerInWords = this.trivia[objKeys[i]].c3;
+                break;
+            default:
+                answerInWords = (this.trivia[objKeys[i]].c4);
+        }
+        // console.log(answerInWords); //working
+    },
+
+    endGame: function(){
+        //at end - "Finished! Here's how you did: Correct Answers: ? Incorrect answers: ? Unanswered: ?" Start over?
+        //start over button appears
+        //button resets the game, not reloads page
+    }//end endGame function
 }; //end var triviaGame
 //i++;
 
-triviaGame.newQuestion();
-console.log("starting");
 
+//press start to start game
+$(".startBtn").on("click", function(){
+    triviaGame.newQuestion();
+    // triviaGame.say();
+
+    $(".startBtn").addClass("hide");
+    //start button disappears
+})
+
+//click on one of the four answers
 $(".btn").on("click", function (){
+    // if (!startButtonPressed) return;
+    // console.log($(this).val());
+    valOfButtonPushed=$(this).val(); //value of button pushed
+    console.log(valOfButtonPushed);
     triviaGame.checkAnswer();
 });
 
 //show: time remaining 30seconds for one question
-//show: question
-//show: four choices
-//hover affect
-//if right - "Correct!" and a pic
-//if wrong - change questions to "Nope!" The correct answer was: ... and a pic
-//if run out of time - change to "Out of time!" The correct answer was:... and a pic
-//and move to next question without user imput after three seconds
-//at end - "Finished! Here's how you did: Correct Answers: ? Incorrect answers: ? Unanswered: ?" Start over?
-//start over does not reload page, it resets the game

@@ -8,6 +8,11 @@ h1{
     padding:10px;
     margin-top:22px;
 }
+.startBtn{
+    width:600px;
+    padding:10px;
+    margin-top:22px;
+}
 .btn:hover{
     background-color:yellow;
     border:1px solid black;
@@ -19,4 +24,10 @@ h2{
 #question{
     background-color:pink;
     line-height:75px;
+}
+.hide{
+    display: none;
+}
+.show{
+    display:block;
 }
