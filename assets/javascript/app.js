@@ -1,4 +1,3 @@
-
 //giant triviaGame var to hold everything so I can reset the game w/o refreshing the page
 var triviaGame = {
     trivia:{
@@ -34,109 +33,94 @@ var triviaGame = {
     numUnanswered:0,
     correctAnswerNumber:0,
     answerInWords:undefined,
+    intervalId:0,
+    valOfButtonPushed:0,
+    answerButtonClicked:false,
+    i:-1,//corresponds to the question the game is on
+    objKeys:undefined,
+    seconds:5, //change to 30 seconds
 
-
-
-    //pick a question
-    newQuestion:function(){
-        // console.log(trivia);
-        
-        //buttons appear
-        $("#time, #question").removeClass("hide");
+    //when page reloads or restart game button is pressed
+    setUpGame:function(){
+        $("#time, #question").removeClass("hide"); //buttons appear below
         $("#time, #question").addClass("show");      
         $(".btn").removeClass("hide");
         $(".btn").addClass("show");
+        objKeys = Object.keys(this.trivia);
+        console.log(objKeys);
+    },
 
-        //start timer
-        setTimeout(this.timesUp, 1000*3);//change to 30
-
-        var i = -1; //corresponds to the question the game is on
-        i++;
-        var objKeys = Object.keys(this.trivia);
-        console.log(objKeys); //0:question1, 1:question2..
-        console.log(objKeys[i]); //question1
-        console.log(this.trivia);//everything
-        console.log(this.trivia[objKeys[i]]);//all info for question1
-        console.log(this.trivia[objKeys[i]].question);//all info for question1
-        console.log(this.trivia[objKeys[i]].answer);//answer# = 4
-        correctAnswerNumber=this.trivia[objKeys[i]].answer;
-        console.log(correctAnswerNumber);//answer = 4
-        $("#question").html(this.trivia[objKeys[i]].question);
-        $("#choice1").html(this.trivia[objKeys[i]].c1);
-        $("#choice2").html(this.trivia[objKeys[i]].c2);
-        $("#choice3").html(this.trivia[objKeys[i]].c3);
-        $("#choice4").html(this.trivia[objKeys[i]].c4);
+    //pick a question
+    newQuestion:function(){      
+        console.log("new question function");
+        $("#time-left").html(" " + triviaGame.seconds);
+        intervalId = setInterval(triviaGame.run30SecondTimer, 1000);
+        $("#answerMsg").html("");
+        triviaGame.answerButtonClicked=false;
+        triviaGame.seconds=5; //change to 30
+        triviaGame.i++;
+        triviaGame.correctAnswerNumber=triviaGame.trivia[objKeys[triviaGame.i]].answer;
+        $("#question").html(triviaGame.trivia[objKeys[triviaGame.i]].question);
+        $("#choice1").html(triviaGame.trivia[objKeys[triviaGame.i]].c1);
+        $("#choice2").html(triviaGame.trivia[objKeys[triviaGame.i]].c2);
+        $("#choice3").html(triviaGame.trivia[objKeys[triviaGame.i]].c3);
+        $("#choice4").html(triviaGame.trivia[objKeys[triviaGame.i]].c4);
+    },
+    
+    run30SecondTimer: function(){
+        $("#time-left").html(" " + triviaGame.seconds);
+        triviaGame.seconds--;
+        if (triviaGame.seconds===-1){
+            clearInterval(intervalId);
+            triviaGame.translateAnswerToWords();
+            $("#answerMsg").html("Out of time! The correct answer was: "+ triviaGame.answerInWords);
+            setTimeout(triviaGame.newQuestion, 2000); //wait 5 sec and move to next question
+            triviaGame.answerButtonClicked=true;
+        }
     },
 
     checkAnswer:function(){
-        // var i = -1; //do I need this and next two lines???
-        // i++;
-        // var objKeys = Object.keys(this.trivia);
-        // console.log(this);
-        // console.log(this.trivia[objKeys[i]].answer);
-        // console.log($(this).val());
-        if (valOfButtonPushed == correctAnswerNumber) {
+        console.log("check answer function");
+        console.log("val of button="+triviaGame.valOfButtonPushed);
+        console.log("correct ans num="+triviaGame.correctAnswerNumber);
+
+        if (triviaGame.valOfButtonPushed == triviaGame.correctAnswerNumber) {
             $("#answerMsg").html("Correct!");
             // showPic(); //need to write this function
-            this.numCorrect++;
-            clearTimeout(this.timesUp);//stop timer //not working
+            triviaGame.numCorrect++;
+            clearInterval(intervalId);
+            setTimeout(triviaGame.newQuestion, 2000); //wait 5 sec and move to next question
+            triviaGame.answerButtonClicked=true;
             }
         else {
-            this.translateAnswerToWords();
-            // var expr = this.trivia[objKeys[i]].answer;
-            // switch(expr) {
-            //     case '1':
-            //         answerInWords = this.trivia[objKeys[i]].c1;
-            //         break;
-            //     case '2':
-            //         answerInWords = this.trivia[objKeys[i]].c2;
-            //         break;
-            //     case '3':
-            //         answerInWords = this.trivia[objKeys[i]].c3;
-            //         break;
-            //     default:
-            //         answerInWords = (this.trivia[objKeys[i]].c4);
-            $("#answerMsg").html("Nope! The correct answer was: "+ answerInWords);
-            // showPic(); //need to write this function
-            this.numIncorrect++;
-            clearTimeout(this.timesUp);//stop timer //not working
+            triviaGame.translateAnswerToWords();
+            console.log(triviaGame.answerInWords);
+            $("#answerMsg").html("Nope! The correct answer was: "+ triviaGame.answerInWords);
+            // showPic(); //need to write triviaGame function
+            triviaGame.numIncorrect++;
+            clearInterval(intervalId);
+            triviaGame.answerButtonClicked=true;
+            setTimeout(triviaGame.newQuestion, 2000); //wait 5 sec and move to next question
             }
-        // }
-        //wait 3 seconds and move to next question
-        //i++ to move to next question OR leave it where it is
     },
 
-    timesUp: function(){
-        // console.log(answerInWords);
-        this.translateAnswerToWords();
-        $("#answerMsg").html("Out of time! The correct answer was: " + answerInWords);
-        console.log(answerInWords);
-
-
-        //if run out of time - change to "Out of time!" The correct answer was:... and a pic
-
-    }, //end timesUp
-
     translateAnswerToWords:function(){
-        var i = -1; //corresponds to the question the game is on
-        i++;
-        // console.log("working");
-        var objKeys = Object.keys(this.trivia);
-        var expr = this.trivia[objKeys[i]].answer;
+        var expr = triviaGame.trivia[objKeys[triviaGame.i]].answer;
         switch(expr) {
-            case '1':
-                answerInWords = this.trivia[objKeys[i]].c1;
+            case 1:
+                triviaGame.answerInWords = triviaGame.trivia[objKeys[triviaGame.i]].c1;
+                console.log("case1="+triviaGame.trivia[objKeys[triviaGame.i]].c1);
                 break;
-            case '2':
-                answerInWords = this.trivia[objKeys[i]].c2;
+            case 2:
+                triviaGame.answerInWords = triviaGame.trivia[objKeys[triviaGame.i]].c2;
                 break;
-            case '3':
-                answerInWords = this.trivia[objKeys[i]].c3;
+            case 3:
+                triviaGame.answerInWords = triviaGame.trivia[objKeys[triviaGame.i]].c3;
                 break;
             default:
-                answerInWords = (this.trivia[objKeys[i]].c4);
+                triviaGame.answerInWords = triviaGame.trivia[objKeys[triviaGame.i]].c4;
         }
-        // console.log(answerInWords); //working
+        return triviaGame.answerInWords;
     },
 
     endGame: function(){
@@ -145,25 +129,24 @@ var triviaGame = {
         //button resets the game, not reloads page
     }//end endGame function
 }; //end var triviaGame
-//i++;
-
 
 //press start to start game
 $(".startBtn").on("click", function(){
+    triviaGame.setUpGame();
     triviaGame.newQuestion();
-    // triviaGame.say();
-
-    $(".startBtn").addClass("hide");
-    //start button disappears
+    $(".startBtn").addClass("hide"); //start button disappears
 })
 
 //click on one of the four answers
 $(".btn").on("click", function (){
-    // if (!startButtonPressed) return;
-    // console.log($(this).val());
-    valOfButtonPushed=$(this).val(); //value of button pushed
-    console.log(valOfButtonPushed);
+    if (triviaGame.answerButtonClicked) return;
+    triviaGame.valOfButtonPushed=$(this).val(); //value of button pushed
     triviaGame.checkAnswer();
 });
 
-//show: time remaining 30seconds for one question
+//change timer from 2000 to 30*1000 seconds
+//add questions
+//endGame function
+//readMe
+//beautify page
+//add pictures
