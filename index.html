@@ -3,7 +3,7 @@
 <head>
     <title>Trivia Game</title>
     <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css?family=Delius+Swash+Caps|Sue+Ellen+Francisco" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Delius+Swash+Caps|Sue+Ellen+Francisco" rel="stylesheet"> -->
     <link href="https://fonts.googleapis.com/css?family=Delius+Swash+Caps|Love+Ya+Like+A+Sister|Sue+Ellen+Francisco" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -23,13 +23,14 @@
         <div class="col-sm-12 col-md-8">
             <button type="button" class="startBtn" id="startButton">Start</button>
             <h2 id ="time" class="hide">Time Remaining:<span id="time-left"></span></h2>
-            <h2 id="question" class="hide"></h2>
-            <h2 id="answerMsg"></h2>
+            <h3 id="question" class="hide"><span id="accompanyingPic"></span></h3>
+            <h4 id="answerMsg"></h4>
+            <!-- accomp pic? -->
             <div id="gifPic"></div>
-            <button type="button" class="btn hide" id="choiceButton" value="1"><h2 id="choice1"></h2></button>
-            <button type="button" class="btn hide" id="choiceButton" value="2"><h2 id="choice2"></h2></button>
-            <button type="button" class="btn hide" id="choiceButton" value="3"><h2 id="choice3"></h2></button>
-            <button type="button" class="btn hide" id="choiceButton" value="4"><h2 id="choice4"></h2></button>
+            <button type="button" class="btn hide" id="choiceButton" value="1"><h4 id="choice1"></h4></button>
+            <button type="button" class="btn hide" id="choiceButton" value="2"><h4 id="choice2"></h4></button>
+            <button type="button" class="btn hide" id="choiceButton" value="3"><h4 id="choice3"></h4></button>
+            <button type="button" class="btn hide" id="choiceButton" value="4"><h4 id="choice4"></h4></button>
             <button type="button" class="restartBtn hide" id="restartButton">Try it again?</button>
         </div>
     </div>

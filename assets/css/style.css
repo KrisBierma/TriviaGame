@@ -6,10 +6,13 @@ h1{
     line-height:1;
 }
 .btn{
-    width:600px;
     padding:10px;
     margin:22px auto 0 auto;
-    background-color:lightgreen;
+    background-color:#29a8b9;
+    border:2px solid #f2f2f2;
+    color:white;
+    /* background-color:#f2f2f2;
+    border:2px solid #29a8b9; */
 }
 .startBtn, .restartBtn{
     width:450px;
@@ -21,29 +24,51 @@ h1{
     align-items: center;
     display:block;
     border-radius: 2%;
-    margin:0 auto;
+    /* margin:150px auto; */
     background-color:lightyellow;
 }
+.startBtn{
+    margin:150px auto;
+}
+.restartBtn{margin:50px auto};
 .startBtn:hover, .restartBtn:hover{
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 .btn:hover{
     background-color:yellow;
-    border:1px solid black;
+    /* border:1px solid black; */
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 h2{
     color:black;
     text-align: center;
+    font-size:30px;
+}
+h3{
+    color:black;
+    font-weight: 400px;
+    text-align: center;
+    font-size: 60px;
+    text-shadow: 1px 1px yellow;
+
+}
+h4{
+    font-size:35px;
+    text-align:center;
+    color:black;
 }
 #question{
-    background-color:white;
-    line-height:75px;
+    /* background-color:white; */
+    /* line-height:75px; */
     /* display:block; */
     margin:0 auto;
-    -webkit-box-shadow: 0 8px 6px -6px #999;
-    -moz-box-shadow: 0 8px 6px -6px #999;
-    box-shadow: 0 8px 6px -6px #999;}
+    /* -webkit-box-shadow: 0 8px 6px -6px #999; */
+    /* -moz-box-shadow: 0 8px 6px -6px #999; */
+    /* box-shadow: 0 8px 6px -6px #999; */
+    width:auto;
+    /* color:white; */
+    /* font-weight: 300px; */
+}
 .hide{
     display: none;
 }
@@ -51,7 +76,7 @@ h2{
     display:block;
 }
 .questionPic{
-    margin:0 auto;
+    margin:35px auto;
     display:block; 
     max-height:300px;
 }
@@ -63,6 +88,9 @@ body{
 }
 .jumbotron{
     background-color:green;
+    /* background-color:#feda64; */
+    
+/* #29a8b9 */
     border-radius:0;
     -webkit-box-shadow: 0 8px 6px -6px #999;
     -moz-box-shadow: 0 8px 6px -6px #999;
